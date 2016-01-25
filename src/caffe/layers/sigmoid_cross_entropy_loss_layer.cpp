@@ -39,8 +39,7 @@ void SigmoidCrossEntropyLossLayer<Dtype>::Forward_cpu(
   const Dtype* target = bottom[1]->cpu_data();
   Dtype loss = 0;
   for (int i = 0; i < count; ++i) {
-    loss -= input_data[i] * (target[i] - (input_data[i] >= 0)) -
-        log(1 + exp(input_data[i] - 2 * input_data[i] * (input_data[i] >= 0)));
+    loss -= input_data[i] * target[i] - log(1 + exp(input_data[i]));
   }
   top[0]->mutable_cpu_data()[0] = loss / num;
 }
